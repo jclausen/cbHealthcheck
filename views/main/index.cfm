@@ -63,5 +63,8 @@
 		if( prc.settings.throwOnSiteErrors && prc.results[ "sites" ][ "errors" ] ){
 			throw( type="HealthCheckException", message="HealthCheck Error: #prc.results[ "sites" ][ "errors" ]# errors found in sites", extendedInfo=serializeJSON( prc.results[ "sites" ][ "data" ] ) );
 		}
+		if( prc.settings.keyExists( "custom" ) && isClosure( prc.settings.custom ) ){
+			prc.settings.custom();
+		}
 	</cfscript>
 </cfoutput>

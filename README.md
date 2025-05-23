@@ -56,6 +56,7 @@ throwOnSiteErrors: false,
 - dbs
 - wireboxDslsToVerify
 - externalSites
+- custom - a closure may be provided which will execute custom checks
 
 ## Configuration
 
@@ -101,7 +102,14 @@ wireboxDslsToVerify: [
     { "dsl": "coldbox:setting:firebaseScope", "type": "String", "required": true },
     { "dsl": "coldbox:setting:apiRateLimit", "type": "Double", "required": true }
 ],
-externalSites: []
+externalSites: [],
+custom : () => {
+	try {
+		application.wirebox.getInstance( "foo" ).myCustomCheck();
+	} catch( any e ){
+		throw( type="HealthCheckException", message="HealthCheck Error: the custom healthcheck method did not succeed." );
+	}
+}
 ```
 
 ### Base Config
@@ -127,5 +135,6 @@ dbs: [
     }
 ],
 wireboxDslsToVerify: [],
-externalSites: []
+externalSites: [],
+custom: () => {}
 ```
